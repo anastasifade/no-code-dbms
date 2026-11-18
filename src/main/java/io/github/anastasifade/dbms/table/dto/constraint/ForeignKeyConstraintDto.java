@@ -1,7 +1,6 @@
 package io.github.anastasifade.dbms.table.dto.constraint;
 
 import io.github.anastasifade.dbms.table.enums.constraint.DtoConstraintType;
-import io.github.anastasifade.dbms.table.validation.annotations.UniqueCaseSensitive;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
+
+import static io.github.anastasifade.dbms.common.constants.PostgreSqlLimits.MAX_IDENTIFIER_LENGTH;
 
 @Data
 @Builder
@@ -23,7 +24,7 @@ public final class ForeignKeyConstraintDto implements ConstraintDto {
      * <p>Only whitelisted characters are permitted: upper- and lowercase letters, digits, underscore and space.
      */
     @NotNull(message = "For 'FOREIGN KEY' constraint, a referenced table name must be provided.")
-    @Size(max = 63, message = "Table name cannot exceed 63 characters.")
+    @Size(max = MAX_IDENTIFIER_LENGTH, message = "Table name cannot exceed 63 characters.")
     @Pattern(regexp = "^[a-zA-Z0-9_ ]+$",
             message = "Unsupported symbols in table name: " +
                     "table name may only contain upper- and lowercase letters, digits, underscores and spaces.")
@@ -36,12 +37,10 @@ public final class ForeignKeyConstraintDto implements ConstraintDto {
      * <p>At least one value is expected.
      * <p>Only whitelisted characters are permitted: upper- and lowercase letters, digits, underscore and space.
      */
-    @UniqueCaseSensitive(message = "Columns referenced by the same foreign key must have unique names." +
-            "Note: uniqueness is determined without case-sensitivity.")
     @NotEmpty(message = "At least one referenced column must be provided.")
     private Set<
             @NotBlank(message = "Referenced column name cannot be blank.")
-            @Size(max = 63, message = "Column name cannot exceed 63 characters.")
+            @Size(max = MAX_IDENTIFIER_LENGTH, message = "Column name cannot exceed 63 characters.")
             @Pattern(regexp = "^[a-zA-Z0-9_ ]+$",
                     message = "Unsupported symbols in column name: " +
                             "column name may only contain upper- and lowercase letters, digits, underscores and spaces.")

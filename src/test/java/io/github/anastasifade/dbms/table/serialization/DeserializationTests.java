@@ -1,4 +1,4 @@
-package io.github.anastasifade.dbms.serialization;
+package io.github.anastasifade.dbms.table.serialization;
 
 import io.github.anastasifade.dbms.table.dto.column.NewColumnDto;
 import io.github.anastasifade.dbms.table.dto.constraint.*;
@@ -7,6 +7,7 @@ import io.github.anastasifade.dbms.table.enums.constraint.CheckOperation;
 import org.junit.jupiter.api.Test;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,7 +21,7 @@ public class DeserializationTests {
         String json = """
                 {
                   "name": "TEST_TABLE",
-                  "columns": [ { "name": "TEST_COLUMN", "type": "TEXT" } ]
+                  "columns": [ { "name": "TEST_COLUMN", "type": "VARCHAR" } ]
                 }
                 """;
 
@@ -38,7 +39,7 @@ public class DeserializationTests {
         String json = """
                 {
                   "name": "TEST_TABLE",
-                  "columns": [ { "name": "TEST_COLUMN", "type": "TEXT" } ],
+                  "columns": [ { "name": "TEST_COLUMN", "type": "VARCHAR" } ],
                   "constraints": [
                     {
                       "columns": [ "TEST_COLUMN" ],
@@ -64,7 +65,7 @@ public class DeserializationTests {
         String json = """
                 {
                   "name": "TEST_TABLE",
-                  "columns": [ { "name": "TEST_COLUMN", "type": "TEXT" } ],
+                  "columns": [ { "name": "TEST_COLUMN", "type": "VARCHAR" } ],
                   "constraints": [
                     {
                       "columns": [ "TEST_COLUMN" ],
@@ -92,11 +93,11 @@ public class DeserializationTests {
         String json = """
                 {
                   "name": "TEST_COLUMN",
-                  "type": "TEXT",
+                  "type": "VARCHAR",
                   "constraints": [
                     { "type": "DEFAULT_CONSTRAINT", "defaultValue": "TEST_VALUE" },
                     { "type": "LENGTH_CONSTRAINT", "length": 16 },
-                    { "type": "CHECK_CONSTRAINT", "checkOperation": "NOT", "checkValues": [ "test" ] },
+                    { "type": "CHECK_CONSTRAINT", "checkOperation": "NOT_EQUALS", "checkValues": [ "test" ] },
                     { "type": "PRIMARY_KEY_CONSTRAINT" },
                     { "type": "FOREIGN_KEY_CONSTRAINT", "referencedTable": "TEST_TABLE", "referencedColumns": [ "T" ] },
                     { "type": "PRECISION_AND_SCALE_CONSTRAINT", "precision": 12 }
@@ -109,7 +110,7 @@ public class DeserializationTests {
         assertThat(dto.getConstraints())
                 .containsExactlyInAnyOrder(new DefaultConstraintDto("TEST_VALUE"),
                         new LengthConstraintDto(16),
-                        new CheckConstraintDto(CheckOperation.NOT, Set.of("test")),
+                        new CheckConstraintDto(CheckOperation.NOT_EQUALS, List.of("test")),
                         new PrimaryKeyConstraintDto(),
                         new ForeignKeyConstraintDto("TEST_TABLE", Set.of("T")),
                         new PrecisionScaleConstraintDto(12, null));
@@ -120,7 +121,7 @@ public class DeserializationTests {
         String json = """
                 {
                   "name": "TEST_COLUMN",
-                  "type": "TEXT",
+                  "type": "VARCHAR",
                   "constraints": [
                     { "type": "NOT_A_TYPE", "not_a_field": "TEST_VALUE" }
                   ]

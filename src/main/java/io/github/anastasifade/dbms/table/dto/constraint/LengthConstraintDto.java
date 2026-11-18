@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static io.github.anastasifade.dbms.common.constants.PostgreSqlLimits.MAX_SPECIFIED_VARCHAR_LENGTH;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public final class LengthConstraintDto implements ConstraintDto {
      */
     @NotNull(message = "Length restriction must be specified.")
     @Positive(message = "Length restriction must be greater than 0.")
-    @Max(value = 10_485_760, message = "Length cannot exceed 10,485,760.")
+    @Max(value = MAX_SPECIFIED_VARCHAR_LENGTH, message = "Length cannot exceed 10,485,760.")
     private Integer length;
 
     @Override

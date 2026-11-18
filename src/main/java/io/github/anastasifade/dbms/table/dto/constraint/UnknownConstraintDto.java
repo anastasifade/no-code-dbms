@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Default implementation of polymorphic ConstraintDto to handle unknown constraint types.
+ * Default implementation of polymorphic {@link ConstraintDto} to handle unknown constraint types.
  */
 @EqualsAndHashCode
 @ToString

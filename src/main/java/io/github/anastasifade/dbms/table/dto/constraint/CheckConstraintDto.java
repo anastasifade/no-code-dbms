@@ -2,14 +2,21 @@ package io.github.anastasifade.dbms.table.dto.constraint;
 
 import io.github.anastasifade.dbms.table.enums.constraint.CheckOperation;
 import io.github.anastasifade.dbms.table.enums.constraint.DtoConstraintType;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
-import java.util.Set;
+import java.util.List;
 
+/**
+ * DTO for creation of a {@code CHECK} constraint.
+ * <p>
+ * Currently, CHECK constraint supports comparing column(s) value(s) against other values,
+ * but not against other columns.
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -22,12 +29,12 @@ public final class CheckConstraintDto implements ConstraintDto {
 
     /**
      * (Optional) Set of values compared against constrained columns in a check operation.
-     * <p>Cannot contain quotes ['', ""] or semicolons [;].
+     * <p>Cannot contain double quotes [""] or semicolons [;].
      * May be null if the check operation does not require comparison against other values (i.e., {@code IS NOT NULL}).
      */
-    private Set<@Pattern(regexp = "^[^;'\"]*$",
-            message = "Check comparison values cannot contain quotes ['', \"\"] or semicolons [;].")
-            String> checkValues;
+    @UniqueElements(message = "Check constraint values must be unique.")
+    private List<@NotBlank(message = "Check constraint value cannot be blank.")
+                            String> checkValues;
 
     @Override
     public DtoConstraintType getType() {

@@ -13,7 +13,11 @@ public class NewTableConstraintColumnsValidator implements
 
     @Override
     public boolean isValid(NewTableDto dto, ConstraintValidatorContext cxt) {
+        // constraints cannot be invalid if there are none
         if (dto.getConstraints() == null || dto.getConstraints().isEmpty()) return true;
+
+        // if constraints exist but no columns have been defined, the constraints are invalid
+        if (dto.getColumns() == null || dto.getColumns().isEmpty()) return false;
 
         Set<String> columnNames = dto.getColumns()
                 .stream()

@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+import static io.github.anastasifade.dbms.common.constants.PostgreSqlLimits.MAX_IDENTIFIER_LENGTH;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -27,7 +29,7 @@ public final class NewColumnDto implements ColumnDto {
      * ensures 63-character limit never exceeds 63 bytes.
      */
     @NotBlank(message = "Column name cannot be blank.")
-    @Size(max = 63, message = "Column name cannot exceed 63 characters.")
+    @Size(max = MAX_IDENTIFIER_LENGTH, message = "Column name cannot exceed 63 characters.")
     @Pattern(regexp = "^[a-zA-Z0-9_ ]+$",
             message = "Unsupported symbols in column name: column name may only contain " +
                     "upper- and lowercase letters, digits, underscores and spaces.")

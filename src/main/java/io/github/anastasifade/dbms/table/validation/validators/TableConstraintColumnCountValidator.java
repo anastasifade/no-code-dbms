@@ -15,10 +15,9 @@ public class TableConstraintColumnCountValidator
 
         return switch (constraintType) {
             case UNKNOWN -> true;
-            case NOT_NULL_CONSTRAINT, DEFAULT_CONSTRAINT, LENGTH_CONSTRAINT, PRECISION_AND_SCALE_CONSTRAINT ->
-                    columnCount == 1;
-            case PRIMARY_KEY_CONSTRAINT, UNIQUE_CONSTRAINT, CHECK_CONSTRAINT, FOREIGN_KEY_CONSTRAINT ->
-                    columnCount > 0;
+            case NOT_NULL_CONSTRAINT, DEFAULT_CONSTRAINT, LENGTH_CONSTRAINT, PRECISION_AND_SCALE_CONSTRAINT,
+                 CHECK_CONSTRAINT -> columnCount == 1;
+            case PRIMARY_KEY_CONSTRAINT, UNIQUE_CONSTRAINT, FOREIGN_KEY_CONSTRAINT -> columnCount > 0;
         };
     }
 }

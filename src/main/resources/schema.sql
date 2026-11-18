@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS metadata.columns (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(63) NOT NULL,
     type VARCHAR(64) NOT NULL,
+    index INT NOT NULL,
     table_id BIGINT NOT NULL REFERENCES metadata.tables (id) ON DELETE CASCADE,
     CONSTRAINT uq_name_per_table UNIQUE (name, table_id)
 );

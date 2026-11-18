@@ -1,5 +1,7 @@
 package io.github.anastasifade.dbms.table.enums.constraint;
 
+import lombok.Getter;
+
 /**
  * <p>Represents all constraint types that are supported by the application and can be used in client-side
  * constraint DTOs. Used in DTO objects only for convenience. </p>
@@ -10,14 +12,31 @@ package io.github.anastasifade.dbms.table.enums.constraint;
  * the overhead of creating a separate table constraint DTO.</p>
  */
 
+@Getter
 public enum DtoConstraintType {
-    NOT_NULL_CONSTRAINT,
-    DEFAULT_CONSTRAINT,
-    LENGTH_CONSTRAINT,
-    PRECISION_AND_SCALE_CONSTRAINT,
-    PRIMARY_KEY_CONSTRAINT,
-    UNIQUE_CONSTRAINT,
-    CHECK_CONSTRAINT,
-    FOREIGN_KEY_CONSTRAINT,
-    UNKNOWN
+    NOT_NULL_CONSTRAINT(ColumnConstraintType.NOT_NULL, null),
+    DEFAULT_CONSTRAINT(ColumnConstraintType.DEFAULT, null),
+    LENGTH_CONSTRAINT(ColumnConstraintType.LENGTH, null),
+    PRECISION_AND_SCALE_CONSTRAINT(ColumnConstraintType.PRECISION_SCALE, null),
+    PRIMARY_KEY_CONSTRAINT(null, TableConstraintType.PRIMARY_KEY),
+    UNIQUE_CONSTRAINT(null, TableConstraintType.UNIQUE),
+    CHECK_CONSTRAINT(null, TableConstraintType.CHECK),
+    FOREIGN_KEY_CONSTRAINT(null, TableConstraintType.FOREIGN_KEY),
+    UNKNOWN(null, null);
+
+    private final ColumnConstraintType columnConstraintType;
+    private final TableConstraintType tableConstraintType;
+
+    DtoConstraintType(ColumnConstraintType columnConstraintType, TableConstraintType tableConstraintType) {
+        this.columnConstraintType = columnConstraintType;
+        this.tableConstraintType = tableConstraintType;
+    }
+
+    public boolean isColumnConstraint() {
+        return columnConstraintType != null;
+    }
+
+    public boolean isTableConstraint() {
+        return tableConstraintType != null;
+    }
 }
