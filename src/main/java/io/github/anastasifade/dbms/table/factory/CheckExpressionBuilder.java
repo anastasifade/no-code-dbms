@@ -82,7 +82,7 @@ public class CheckExpressionBuilder {
 
     private String getCheckValuesForDataType(DataType type, List<String> values, String delimiter) {
         return switch (type) {
-            case VARCHAR, URL, DATE, TIME, TIME_WITH_TIMEZONE, TIMESTAMP, TIMESTAMP_WITH_TIMEZONE ->
+            case VARCHAR, FILE, DATE, TIME, TIME_WITH_TIMEZONE, TIMESTAMP, TIMESTAMP_WITH_TIMEZONE ->
                     values.stream()
                     .map(v -> "'" + v.replace("'", "''") + "'")
                     .collect(Collectors.joining(delimiter));

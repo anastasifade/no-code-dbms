@@ -42,12 +42,14 @@ public class TableMetadata {
      */
     @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("index ASC")
+    @Builder.Default
     private List<ColumnMetadata> columns = new ArrayList<>();
 
     /**
      * List of table-level constraints applied to the given table.
      */
     @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<TableConstraint> tableConstraints = new ArrayList<>();
 
     @Override

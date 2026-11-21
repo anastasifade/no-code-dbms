@@ -60,18 +60,21 @@ public class ColumnMetadata {
      * List of column-level constraints applied to the given column.
      */
     @OneToMany(mappedBy = "column", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<ColumnConstraint> columnConstraints = new ArrayList<>();
 
     /**
      * List of table-level constraints that affect the given column.
      */
     @ManyToMany(mappedBy = "columns", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @Builder.Default
     private List<TableConstraint> tableConstraints = new ArrayList<>();
 
     /**
      * List of {@code FOREIGN KEY} constraints that point to the given column.
      */
     @ManyToMany(mappedBy = "referenceColumns",  cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @Builder.Default
     private List<TableConstraint> references = new ArrayList<>();
 
     @Override

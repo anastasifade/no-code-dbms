@@ -19,8 +19,9 @@ import lombok.Getter;
  *     as compared to using a supported type {@link VARCHAR} without length specifier.</li>
  *     <li>{@code bytea} - major differences exist in binary data storage in PostgreSQL ({@code bytea}
  *     as compared to the SQL standard {@code BLOB}. Binary data storage is not supported to avoid cross-compatibility
- *     issues. As an alternative, the application supports saving a file locally and storing a {@link #URL}
- *     pointing to the file. URL storage is handled using the {@code varchar} data type.</li>
+ *     issues. As an alternative, the application supports saving a file locally and storing a URI
+ *     pointing to the file. URI storage is handled using the {@code varchar} data type. To indicate the format,
+ *     {@link #FILE} type is used.</li>
  *     <li>Precision for Date/Time values - not supported in the current version.</li>
  *     <li>{@code internal} - not supported in the current version.</li>
  *     <li>{@code enum} - not supported in the current version. Instead, the existing {@link #VARCHAR} type
@@ -38,7 +39,7 @@ import lombok.Getter;
 @Getter
 public enum DataType {
     VARCHAR("VARCHAR"),
-    URL("VARCHAR"),
+    FILE("VARCHAR"),
     BOOLEAN("BOOLEAN"),
     SMALLINT("SMALLINT"),
     INTEGER("INTEGER"),
